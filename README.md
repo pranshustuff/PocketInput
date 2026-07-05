@@ -1,4 +1,5 @@
 # PocketInput
+### v0.1.0
 
 PocketInput is an open-source Android application that turns your phone into a wired game controller for Linux using USB tethering.
 
@@ -52,8 +53,7 @@ Steam / SDL2 / Native Linux Games
 
 ## Demo
 
-## Roadmap
-
+## To-do
 - Better joystick UX
 - Adjustable sensitivity
 - Auto-discover receiver
