@@ -1,0 +1,15 @@
+.idea/
+
+__pycache__/
+
+.venv/
+venv/
+
+
+AndroidClient/.gradle/
+AndroidClient/build/
+AndroidClient/**/build/
+AndroidClient/local.properties
+
+.DS_Store
+Thumbs.db
