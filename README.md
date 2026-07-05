@@ -13,9 +13,6 @@ The Android app communicates with a Python receiver over TCP, which emulates a v
 - Built with Kotlin, Jetpack Compose, and python-evdev
 
 ## Architecture
-
-## Architecture
-
 ```text
 Android
 │
