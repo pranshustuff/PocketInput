@@ -134,7 +134,15 @@ TCP connect
 *Coming soon.*
 
 ## Roadmap
+* Robust auto-reconnect and network health
 * Improve joystick UX (thumb snapping, deadzones)
 * Adjustable sensitivity
-* Automatic receiver discovery
 * Improved controller layout
+* Easy Setup script
+* Packageing apk and script
+---
+### Long-Term
+* Multiple controllers
+* Haptic Feedback
+* Receiver GUI
+* 
