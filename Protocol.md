@@ -1,21 +1,19 @@
-PocketInput Protocol v1
+# PocketInput Protocol v1
 
-UDP
-----
-Port: 5678
+## UDP
+*Port: 5678*
 
-DISCOVER
+### DISCOVER
 ```json
 {
     "service": "PocketInput",
     "type": "discover",
     "protocol": 1,
 }
-
 ```
 
 
-DISCOVER_REPLY
+### DISCOVER_REPLY
 
 ```json
 {
@@ -26,18 +24,16 @@ DISCOVER_REPLY
         "protocol": 1,
         "port": TCP_PORT,
 }
-
 ```
 
-TCP
-----
-Port: 5000
+## TCP
+*Port: 5000*
 
-INPUT
-HEARTBEAT
+### CONTROLLER_STATE
+### HEARTBEAT (for protocol v2)
 
-Discovery
----------
-Android broadcasts DISCOVER.
-Receiver replies with DISCOVER_REPLY.
-Android connects via TCP.
+## Discovery
+
+- Android broadcasts DISCOVER.s
+- Receiver replies with DISCOVER_REPLY.
+- Android connects via TCP.

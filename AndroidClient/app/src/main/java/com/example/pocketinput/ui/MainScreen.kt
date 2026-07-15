@@ -1,5 +1,6 @@
 package com.example.pocketinput.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,17 +13,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pocketinput.controller.ControllerState
 import com.example.pocketinput.network.TCPClient
+import com.example.pocketinput.network.Discovery
+import com.example.pocketinput.network.Connect
 import com.example.pocketinput.ui.controls.GameButton
 import com.example.pocketinput.ui.controls.Joystick
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-private const val RECEIVER_IP = "10.161.131.239"
-private const val RECEIVER_PORT = 5000
-private val client = TCPClient()
-
 @Composable
 fun MainScreen() {
+    var client by remember { mutableStateOf<TCPClient?>(null) }
+    var receiverName by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     var controllerState by remember { mutableStateOf(ControllerState()) }
     var isConnected by remember { mutableStateOf(false) }
@@ -30,7 +31,7 @@ fun MainScreen() {
     LaunchedEffect(controllerState) {
         if (isConnected) {
             scope.launch(Dispatchers.IO) {
-                client.send(controllerState)
+                client?.send(controllerState)
             }
         }
     }
@@ -51,7 +52,19 @@ fun MainScreen() {
         ) {
             Button(onClick = {
                 scope.launch(Dispatchers.IO) {
-                    isConnected = client.connect(RECEIVER_IP, RECEIVER_PORT)
+                    val result = Connect.discoverAndConnect(5678)
+
+                    if (result != null) {
+                        val (receiver, clientInstance) = result
+                        client = clientInstance
+                        receiverName = receiver.deviceName
+                        isConnected = true
+
+                        Log.d(
+                            "PocketInput",
+                            "Connected to ${receiver.deviceName}"
+                        )
+                    }
                 }
             }) {
                 Text(if (isConnected) "Connected" else "+")
@@ -78,7 +91,8 @@ fun MainScreen() {
 
             Button(onClick = {
                 scope.launch(Dispatchers.IO) {
-                    client.disconnect()
+                    client?.disconnect()
+                    client = null
                     isConnected = false
                 }
             }) {

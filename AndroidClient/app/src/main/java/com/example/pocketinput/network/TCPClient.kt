@@ -5,38 +5,18 @@ import java.net.Socket
 import com.example.pocketinput.controller.ControllerState
 import kotlinx.serialization.json.Json
 
-class TCPClient {
-
-    private var socket: Socket? = null
-    private var writer: PrintWriter? = null
-
-    private val json = Json {
-        encodeDefaults = true
-    }
-
-    fun connect(ip: String, port: Int): Boolean {
-        if (socket != null) return true
-
-        return try {
-            val s = Socket(ip, port)
-            socket = s
-            writer = PrintWriter(s.getOutputStream(), true)
-            true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            false
-        }
-    }
+class TCPClient(
+    private val socket: Socket
+) {
+    private val writer =
+        PrintWriter(socket.getOutputStream(), true)
 
     fun send(state: ControllerState) {
-        writer?.println(json.encodeToString(state))
+        writer.println(json.encodeToString(state))
     }
 
     fun disconnect() {
-        writer?.close()
-        socket?.close()
-
-        writer = null
-        socket = null
+        writer.close()
+        socket.close()
     }
 }
