@@ -9,7 +9,6 @@ DISCOVER = {
 
 HOST = "127.0.0.1"
 
-
 def find_receiver(port):
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         sock.settimeout(2)
@@ -31,6 +30,3 @@ def find_receiver(port):
         return packet
 
     return None
-
-
-print(find_receiver(5678))

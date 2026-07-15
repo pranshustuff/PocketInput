@@ -7,8 +7,6 @@ CONFIG_PATH = Path.home() / ".config" / "pocketinput" / "config.json"
 
 UDP_IP = "0.0.0.0"
 UDP_PORT = 5678
-TCP_PORT = 5000
-
 PROTOCOL = 1
 SERVICE = "PocketInput"
 
@@ -29,7 +27,7 @@ def load_device_info():
     return device_info
 
 
-def find_client():
+def find_client(TCP_PORT):
     device_info = load_device_info()
 
     DISCOVER_REPLY = {
@@ -69,4 +67,4 @@ def find_client():
                 return addr
 
 if __name__ == "__main__":
-    find_client()
+    find_client(5000)

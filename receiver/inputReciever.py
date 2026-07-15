@@ -1,24 +1,20 @@
-import socket
 import json
 from inputParser import InputParser
+from connection import *
+from discover_clients import *
+import time
 
-HOST = "10.161.131.239"
-PORT = 5000
+TCP_PORT = 5000
 
-server = socket.socket(socket.AF_INET, socket.SOL_SOCKET)
-server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-server.bind((HOST, PORT))
-server.listen(1)
-
-print(f"Listening on {HOST}:{PORT}")
-
+server = start_tcp_server(TCP_PORT)
 parser = InputParser()
 
 try:
     while True:
-        print("Waiting for connection...")
-        conn, addr = server.accept()
-        print(f"Client connected: {addr}")
+        find_client(TCP_PORT)
+
+        print("Waiting for TCP connection...")
+        conn, addr = wait_for_connection(server)
 
         buffer = ""
 
@@ -28,7 +24,6 @@ try:
 
                 if not data:
                     print("Client disconnected.")
-                    parser.reset()
                     break
 
                 buffer += data.decode()
@@ -39,21 +34,12 @@ try:
                     if not line.strip():
                         continue
 
-                    try:
-                        packet = json.loads(line)
-                        parser.parse(packet)
-                    except json.JSONDecodeError:
-                        print("Received malformed JSON. Packet ignored.")
-                    except KeyError as e:
-                        print(f"Missing field: {e}. Packet ignored.")
+                    packet = json.loads(line)
+                    parser.parse(packet)
 
         finally:
+            parser.reset()
             conn.close()
 
 except KeyboardInterrupt:
-    print("\nShutting down...")
-
-finally:
-    parser.reset()
-    parser.pad.close()
-    server.close()
+    ...
