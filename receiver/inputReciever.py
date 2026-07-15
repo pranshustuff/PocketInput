@@ -2,7 +2,7 @@ import socket
 import json
 from inputParser import InputParser
 
-HOST = "10.78.238.132"
+HOST = "10.161.131.239"
 PORT = 5000
 
 server = socket.socket(socket.AF_INET, socket.SOL_SOCKET)

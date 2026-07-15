@@ -17,7 +17,7 @@ import com.example.pocketinput.ui.controls.Joystick
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-private const val RECEIVER_IP = "10.78.238.132"
+private const val RECEIVER_IP = "10.161.131.239"
 private const val RECEIVER_PORT = 5000
 private val client = TCPClient()
 
